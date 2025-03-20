@@ -50,6 +50,11 @@ const SignIn = async(req, res)=>{
 
          bcrypt.compare(password,existingUser.password, (err, data)=>{
             if(data){
+                const token = jwt.sign(
+                    { email: existingUser.email, username: existingUser.username },
+                    process.env.JWT_SECRET || "EBOOKSTORE", 
+                    { expiresIn: "30d" } 
+                );
                 res.status(200).json({msg:"Sign-In Sucessfully"});
             }
             else{
