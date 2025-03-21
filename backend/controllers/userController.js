@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const  User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const SignUp = async(req, res) =>{
+const register = async(req, res) =>{
     try {
         const {username, email, password, address} = req.body;
         
@@ -33,13 +33,13 @@ const SignUp = async(req, res) =>{
         })
 
         await newUser.save()
-        return res.status(200).json({msg:"SignUp sucessfull"});
+        return res.status(200).json({msg:"Register sucessfull"});
     } catch (error) {
         res.status(500).json({msg:"Internal server error"})
         }
 }
 
-const SignIn = async(req, res)=>{
+const login = async(req, res)=>{
     try {
         const {username, password} = req.body;
 
@@ -50,12 +50,9 @@ const SignIn = async(req, res)=>{
 
          bcrypt.compare(password,existingUser.password, (err, data)=>{
             if(data){
-                const token = jwt.sign(
-                    { email: existingUser.email, username: existingUser.username },
-                    process.env.JWT_SECRET || "EBOOKSTORE", 
-                    { expiresIn: "30d" } 
-                );
-                res.status(200).json({msg:"Sign-In Sucessfully"});
+                const authClaims = [{name: existingUser.name}, {role:existingUser.role}];
+                const token = jwt.sign({authClaims},"EBOOKSTORE",{expiresIn:"30d"});
+                res.status(200).json({msg:"Login Sucessfully"});
             }
             else{
                 res.status(400).json({msg:"Invalid credentials"});
@@ -66,4 +63,4 @@ const SignIn = async(req, res)=>{
     }
 }
 
-module.exports ={SignUp, SignIn};
+module.exports ={register, login};
