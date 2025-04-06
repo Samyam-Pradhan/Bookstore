@@ -1,0 +1,180 @@
+/* Feature Section Main Styling */
+.feature-section {
+    padding: 5rem 0.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    
+    border-radius: 12px;
+  }
+  
+  /* Section title */
+  .feature-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #333;
+    position: relative;
+  }
+  
+  .feature-section h2::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 4px;
+    background-color: #4a4fca;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+  
+  /* Books grid layout - optimized for exactly 5 books */
+  .books-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+    padding: 0 1rem;
+  }
+  
+  /* Individual book item */
+  .book-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  .book-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Book image container */
+  .book-item img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  /* Book details */
+  .book-item h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.2rem 0.8rem 0.5rem;
+    color: #333;
+    line-height: 1.4;
+    /* Ensure long titles don't overflow */
+    display: -webkit-box;
+   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .book-item p {
+    font-size: 0.9rem;
+    margin: 0.3rem 0.8rem;
+    color: #666;
+  }
+  
+  /* Author styling */
+  .book-item p:nth-of-type(1) {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Rank styling */
+  .book-item p:nth-of-type(2) {
+    margin-top: auto;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    color: #4a4fca;
+    margin: auto 0.8rem 0.8rem;
+  }
+  
+  /* Loading & Error states */
+  .feature-section > div:only-child {
+    text-align: center;
+    padding: 5rem 0;
+    font-size: 1.2rem;
+    color: #666;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Animation for items to fade in as they load */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .book-item {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .books-list {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    
+    .book-item img {
+      height: 220px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .books-list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 0 1.5rem;
+    }
+    
+    .book-item img {
+      height: 260px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .feature-section {
+      padding: 3rem 0.5rem;
+    }
+    
+    .feature-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .books-list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+      padding: 0 1rem;
+    }
+    
+    .book-item img {
+      height: 220px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .books-list {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 0 1.5rem;
+    }
+    
+    .book-item img {
+      height: 280px;
+    }
+    
+    .book-item h3 {
+      font-size: 1.2rem;
+    }
+  }
