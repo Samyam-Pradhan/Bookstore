@@ -8,18 +8,12 @@ const Feature = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const API_KEY = '50Vnq7Vrbw5QyCTcAoJy1sXASPsjAivS'; 
-    const url = `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${API_KEY}`;
-
-    axios.get(url)
+    axios.get('http://localhost:5000/api/books/nyt-bestsellers')
       .then(response => {
-        // Slice only the first 5 books and update the state
         setBooks(response.data.results.books.slice(0, 5));
-        setLoading(false);
       })
       .catch(err => {
         setError('Failed to fetch books.');
-        setLoading(false);
       });
   }, []);
 
