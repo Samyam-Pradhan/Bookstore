@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const Feature = () => {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+/*   const [loading, setLoading] = useState(true); */
   const [error, setError] = useState(null);
 
   useEffect(() => {
