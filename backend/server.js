@@ -1,18 +1,25 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDb = require("./config/db");
-//const bookRoutes = require("./routes/bookRoutes");
+const bookRoutes = require("./routes/bookRoutes");
 const userRoutes = require("./routes/userRoutes");
+const cors = require("cors");
+
+dotenv.config(); // Load environment variables
+connectDb(); // Connect to MongoDB
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
+// Middleware
+app.use(cors()); // Allow requests from frontend (avoids CORS issues)
 app.use(express.json());
+
+// Routes
 app.use('/api/v1', userRoutes);
-//app.use('/api', bookRoutes);
+app.use('/api/books', bookRoutes); // ✅ Remove the forward slash typo
 
-connectDb();
-app.listen(PORT, () =>{
-    console.log(`Server running on port ${PORT}`);
-})
-
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

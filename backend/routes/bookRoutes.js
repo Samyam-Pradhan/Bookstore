@@ -1,10 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const { getNYTBooks } = require('../controllers/bookController');
 
-router.get("/books", (req, res)=>{
-
-   res.json({message: "book routes"});
-    
-})
+router.get('/nyt-bestsellers', getNYTBooks);
 
 module.exports = router;
