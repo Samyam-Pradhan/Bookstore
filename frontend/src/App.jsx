@@ -1,23 +1,24 @@
-import './App.css'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Feature from './components/Feature'
-import Category from './components/Category'
-import Countdown from './components/Countdown'
-import { Footer } from './components/Footer'
+import './App.css';
+import Homepage from './pages/Hompage';
+import LoginModal from './components/LoginModal';
+import SignupModal from './components/SignupModal';
+import { useState } from 'react';
 
 function App() {
-  const targetDate = new Date(Date.now() + 16 * 60 * 60 * 1000).toISOString(); // 2 hours from now
- return (
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+  return (
     <>
-      <Navbar />
-      <Hero />
-      <Feature />
-      <Countdown targetDate={targetDate} />
-      <Category />
-      <Footer />
+      <Homepage
+        onLoginClick={() => setShowLogin(true)}
+        onSignupClick={() => setShowSignup(true)}
+      />
+
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showSignup && <SignupModal onClose={() => setShowSignup(false)} />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
