@@ -1,5 +1,5 @@
 import "../styles/Hero.css"
-import hero from "../images/hero.jpg";
+import hero3 from "../images/hero3.jpg";
 
 const Hero = () =>{
     return(
@@ -9,7 +9,7 @@ const Hero = () =>{
                 <button className="hero-btn">Shop now</button>
             </div>
             <div className="hero-img">
-                <img src={hero} alt="" />
+                <img src={hero3} alt=""/>
             </div>
         </section>
     )
