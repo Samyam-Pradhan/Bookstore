@@ -6,8 +6,8 @@ const userRoutes = require("./routes/userRoutes");
 const cors = require("cors");
 
 dotenv.config(); // Load environment variables
-/* connectDb(); // Connect to MongoDB
- */
+//connectDb(); // Connect to MongoDB
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -17,9 +17,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1', userRoutes);
-app.use('/api/books', bookRoutes); // ✅ Remove the forward slash typo
+app.use('/api/books', bookRoutes); 
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
