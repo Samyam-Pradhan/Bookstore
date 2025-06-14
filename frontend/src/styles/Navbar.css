@@ -172,6 +172,69 @@ nav ul li a:hover::after {
   box-shadow: 0 3px 6px rgba(74, 79, 202, 0.2);
 }
 
+/* User avatar styling */
+.user-info img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.user-info img:hover {
+  box-shadow: 0 0 8px rgba(74, 79, 202, 0.6);
+}
+
+/* User dropdown menu */
+.user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #222;
+  color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  width: 220px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.user-dropdown strong {
+  font-weight: 700;
+}
+
+.user-dropdown small {
+  color: #bbb;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+/* Logout button inside dropdown */
+.user-dropdown button {
+  width: 100%;
+  padding: 8px;
+  background-color: #e63946;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.user-dropdown button:hover:not(:disabled) {
+  background-color: #d62828;
+}
+
+.user-dropdown button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 /* Responsive adjustments */
 @media (max-width: 968px) {
   .nav-grid {
@@ -226,6 +289,21 @@ nav ul li a:hover::after {
     text-align: center;
     display: block;
   }
+}
+
+/* Logout link styles fallback */
+.logout {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: #ff4d4d; /* red background on hover */
+  color: white;
 }
 
 /* Custom animation for hover on buttons */
