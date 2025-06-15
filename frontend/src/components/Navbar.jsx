@@ -58,6 +58,7 @@ const Navbar = ({ user, onLoginClick, onSignupClick }) => {
             <li><a href="/">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Features</a></li>
+            <li><a href="/shop">Shop</a></li>
 
             {!user ? (
               <>

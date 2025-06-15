@@ -5,7 +5,7 @@ import Feature from '../components/Feature';
 import Category from '../components/Category';
 import Countdown from '../components/Countdown';
 
-import { Footer } from '../components/Footer';
+import Footer from '../components/Footer';
 
 function Homepage({ user, onLoginClick, onSignupClick }) {
   const targetDate = new Date(Date.now() + 16 * 60 * 60 * 1000).toISOString();

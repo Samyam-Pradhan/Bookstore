@@ -4,7 +4,7 @@ import { FaPinterest } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import '../styles/Footer.css';
 
-export const Footer = () => {
+const Footer = () => {
     return (
         <footer className="footer">
             <div className="socials">
@@ -41,3 +41,5 @@ export const Footer = () => {
         </footer>
     );
 };
+
+export default Footer;

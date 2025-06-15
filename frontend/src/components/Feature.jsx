@@ -7,7 +7,7 @@ const Feature = () => {
   const [error, setError] = useState(null);
 
   // Replace with your NYT API key
-  const API_KEY = '50Vnq7Vrbw5QyCTcAoJy1sXASPsjAivS';
+  const API_KEY = import.meta.env.VITE_NYT_API_KEY;
 
   useEffect(() => {
     axios
