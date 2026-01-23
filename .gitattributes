@@ -1,0 +1,2 @@
+# Always use LF for JSON files
+*.json text eol=lf

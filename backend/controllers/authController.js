@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
+// SIGNUP
 export const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -19,6 +20,8 @@ export const signup = async (req, res) => {
       password: hashedPassword,
     });
 
+    const token = user.generateToken();
+
     res.status(201).json({
       message: "User registered successfully",
       user: {
@@ -26,26 +29,25 @@ export const signup = async (req, res) => {
         name: user.name,
         email: user.email,
       },
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: "Signup failed", error });
   }
 };
 
-
+// LOGIN
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    const token = user.generateToken();
 
     res.json({
       message: "Login successful",
@@ -54,6 +56,7 @@ export const login = async (req, res) => {
         name: user.name,
         email: user.email,
       },
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: "Login failed", error });
