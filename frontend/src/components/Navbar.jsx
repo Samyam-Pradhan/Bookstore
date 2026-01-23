@@ -54,12 +54,11 @@ const Navbar = () => {
             )}
 
             <li>
-              <Link to="/about" className="hover:text-indigo-600 transition">
+              <Link to="/" className="hover:text-indigo-600 transition">
                 About
               </Link>
             </li>
 
-            {/* Show Login/Signup if not logged in, Logout if logged in */}
             {!isLoggedIn ? (
               <>
                 <li>
@@ -93,7 +92,6 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* Mobile search */}
       <div className="md:hidden px-6 pb-4">
         <div className="flex items-center border rounded-full px-4 py-2">
           <input

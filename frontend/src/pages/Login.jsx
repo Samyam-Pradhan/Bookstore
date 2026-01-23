@@ -53,7 +53,7 @@ const Login = () => {
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
           <input
             type="email"
             name="email"
