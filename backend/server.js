@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 /* const connectDb = require("./config/db"); */
 const bookRoutes = require("./routes/bookRoutes");
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./routes/authRoutes");
 const cors = require("cors");
 
 dotenv.config(); // Load environment variables
