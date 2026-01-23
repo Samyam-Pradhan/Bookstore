@@ -1,16 +1,17 @@
-import { CiSearch } from "react-icons/ci";
 import React from "react";
-const Navbar = ({ onLoginClick, onSignupClick }) => {
+import { CiSearch } from "react-icons/ci";
+import { Link } from "react-router-dom";
+
+const Navbar = () => {
   return (
     <header className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        
-        {/* Logo */}
-        <div className="text-2xl font-bold text-indigo-600">
+        <Link
+          to="/"
+          className="text-2xl font-bold text-indigo-600"
+        >
           Digital Bookstore
-        </div>
-
-        {/* Search Bar */}
+        </Link>
         <div className="hidden md:flex items-center border rounded-full px-4 py-2 w-72">
           <input
             type="text"
@@ -20,47 +21,43 @@ const Navbar = ({ onLoginClick, onSignupClick }) => {
           <CiSearch className="text-xl text-gray-500" />
         </div>
 
-        {/* Navigation */}
         <nav>
           <ul className="flex items-center gap-6 text-sm font-medium">
             <li>
-              <a href="#" className="hover:text-indigo-600 transition">
+              <Link to="/" className="hover:text-indigo-600 transition">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-indigo-600 transition">
+              <Link to="/shop" className="hover:text-indigo-600 transition">
+                Shop
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="hover:text-indigo-600 transition">
                 About
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-indigo-600 transition">
-                Features
-              </a>
-            </li>
-
-            {/* Auth buttons */}
-            <li>
-              <button
-                onClick={onLoginClick}
+              <Link
+                to="/login"
                 className="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50 transition"
               >
                 Login
-              </button>
+              </Link>
             </li>
             <li>
-              <button
-                onClick={onSignupClick}
+              <Link
+                to="/signup"
                 className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
               >
                 Sign Up
-              </button>
+              </Link>
             </li>
           </ul>
         </nav>
       </div>
 
-      {/* Mobile Search */}
       <div className="md:hidden px-6 pb-4">
         <div className="flex items-center border rounded-full px-4 py-2">
           <input
