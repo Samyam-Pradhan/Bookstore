@@ -1,4 +1,5 @@
 // src/pages/Homepage.jsx
+import React from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Feature from '../components/Feature';
@@ -12,14 +13,8 @@ function Homepage({ user, onLoginClick, onSignupClick }) {
 
   return (
     <>
-      <Navbar
-        user={user}
-        onLoginClick={onLoginClick}
-        onSignupClick={onSignupClick}
-      />
+      <Navbar/>
       <Hero />
-      <Feature />
-      <Countdown targetDate={targetDate} />
       <Category />
       <Footer />
      

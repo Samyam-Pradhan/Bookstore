@@ -1,4 +1,4 @@
-import "../styles/Countdown.css";
+
 import sales from "../images/sales.png"
 import { useState, useEffect } from 'react';
 

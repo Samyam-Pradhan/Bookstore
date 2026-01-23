@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "../styles/Feature.css";
+
 import axios from 'axios';
 
 const Feature = () => {

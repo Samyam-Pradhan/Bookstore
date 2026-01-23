@@ -1,5 +1,5 @@
 import hero3 from "../images/hero3.jpg";
-
+import React from "react";
 const Hero = () => {
   return (
     <section className="bg-gray-50">
