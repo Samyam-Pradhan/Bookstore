@@ -4,11 +4,14 @@ import axios from 'axios';
 
 const Feature = () => {
   const [books, setBooks] = useState([]);
-/*   const [loading, setLoading] = useState(true); */
   const [error, setError] = useState(null);
 
+  // Replace with your NYT API key
+  const API_KEY = import.meta.env.VITE_NYT_API_KEY;
+
   useEffect(() => {
-    axios.get('http://localhost:5000/api/books/nyt-bestsellers')
+    axios
+      .get(`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${API_KEY}`)
       .then(response => {
         setBooks(response.data.results.books.slice(0, 5));
       })
@@ -17,7 +20,6 @@ const Feature = () => {
       });
   }, []);
 
-  /* if (loading) return <div>Loading...</div>; */
   if (error) return <div>{error}</div>;
 
   return (

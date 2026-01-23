@@ -1,0 +1,320 @@
+/* Header styles */
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(230, 230, 230, 0.7);
+}
+
+/* Main navbar grid */
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Logo styling */
+.logo h1 {
+  color: #4a4fca;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+  transition: transform 0.3s ease;
+}
+
+.logo h1:hover {
+  transform: translateY(-1px);
+}
+
+/* Search bar styling */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.search-bar input::placeholder {
+  color: #adb5bd;
+}
+
+.search-bar input:focus {
+  border-color: #4a4fca;
+  box-shadow: 0 0 0 3px rgba(74, 79, 202, 0.1);
+  background-color: #fff;
+}
+
+/* Adjusting the search icon styling */
+.search-bar svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: #adb5bd;
+  transition: color 0.3s ease;
+}
+
+.search-bar input:focus + svg {
+  color: #4a4fca;
+}
+
+/* Navigation menu styling */
+nav ul {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  padding: 0.3rem 0;
+}
+
+nav ul li a:hover {
+  color: #4a4fca;
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #4a4fca;
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Auth buttons styles */
+.auth-item a {
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+}
+
+.auth-item a::after {
+  display: none; /* Remove underline effect */
+}
+
+/* Login button specific styles */
+.login-btn {
+  border: 1.5px solid #4a4fca;
+  color: #4a4fca !important;
+  background-color: transparent;
+}
+
+.login-btn:hover {
+  background-color: rgba(74, 79, 202, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 79, 202, 0.15);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(74, 79, 202, 0.15);
+}
+
+/* Signup button specific styles */
+.signup-btn {
+  background-color: #4a4fca;
+  color: white !important; /* Override hover color */
+  border: 1.5px solid #4a4fca;
+  box-shadow: 0 2px 6px rgba(74, 79, 202, 0.25);
+}
+
+.signup-btn:hover {
+  background-color: #3a3fa0;
+  border-color: #3a3fa0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(74, 79, 202, 0.3);
+}
+
+.signup-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(74, 79, 202, 0.2);
+}
+
+/* User avatar styling */
+.user-info img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.user-info img:hover {
+  box-shadow: 0 0 8px rgba(74, 79, 202, 0.6);
+}
+
+/* User dropdown menu */
+.user-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #222;
+  color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  width: 220px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.user-dropdown strong {
+  font-weight: 700;
+}
+
+.user-dropdown small {
+  color: #bbb;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+/* Logout button inside dropdown */
+.user-dropdown button {
+  width: 100%;
+  padding: 8px;
+  background-color: #e63946;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.user-dropdown button:hover:not(:disabled) {
+  background-color: #d62828;
+}
+
+.user-dropdown button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Responsive adjustments */
+@media (max-width: 968px) {
+  .nav-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.2rem;
+  }
+  
+  .search-bar {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    order: 3;
+  }
+  
+  nav ul {
+    justify-content: flex-end;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    padding: 0 1.5rem;
+  }
+  
+  .logo {
+    text-align: center;
+  }
+  
+  .search-bar {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 1.2rem 0;
+  }
+  
+  nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.2rem 2rem;
+    padding: 0.5rem 0;
+  }
+  
+  .auth-item {
+    margin-top: 0.5rem;
+  }
+  
+  .auth-item a {
+    padding: 0.6rem 1.5rem;
+    min-width: 110px;
+    text-align: center;
+    display: block;
+  }
+}
+
+/* Logout link styles fallback */
+.logout {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: #ff4d4d; /* red background on hover */
+  color: white;
+}
+
+/* Custom animation for hover on buttons */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 79, 202, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(74, 79, 202, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 79, 202, 0);
+  }
+}
