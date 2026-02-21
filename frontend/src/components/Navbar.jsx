@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CiSearch } from "react-icons/ci";
+import { CiSearch, CiShoppingCart } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -55,11 +55,7 @@ const Navbar = () => {
   };
 
   return (
-    // ✅ Key fix: add `relative` here on the <header> so the dropdown is anchored to it
-    <header
-      className="bg-white shadow-md z-50 relative"
-      onMouseLeave={() => setShowDropdown(false)}
-    >
+    <header className="bg-white shadow-md z-50 relative" onMouseLeave={() => setShowDropdown(false)}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-indigo-600">
@@ -86,16 +82,18 @@ const Navbar = () => {
               </button>
             </li>
 
-            <li>
-              <Link to="/" className="hover:text-indigo-600 transition">
-                Explore
-              </Link>
-            </li>
-            <li>
-              <Link to="/" className="hover:text-indigo-600 transition">
-                Support
-              </Link>
-            </li>
+            {/* Show cart only if logged in */}
+            {isLoggedIn && (
+              <li>
+                <Link
+                  to="/cart"
+                  className="flex items-center gap-1 px-3 py-2 hover:text-indigo-600 transition"
+                >
+                  <CiShoppingCart className="text-xl" />
+                  Cart
+                </Link>
+              </li>
+            )}
 
             {!isLoggedIn ? (
               <>
@@ -130,7 +128,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {/* ✅ Dropdown is now a sibling of the main bar, anchored to the header with left-0 right-0 */}
+      {/* Dropdown */}
       {showDropdown && (
         <div
           className="absolute left-0 right-0 top-full bg-white shadow-lg p-6 grid grid-cols-4 gap-6 z-50"
