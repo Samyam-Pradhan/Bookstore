@@ -1,18 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { CiSearch } from "react-icons/ci";
+import { CiSearch, CiShoppingCart } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
-  // Check login status on mount
+  const categories = {
+    "Main Collections": ["Shop All", "Fiction", "Non-Fiction", "New Arrivals"],
+    "Other Collections": [
+      "Children's Books",
+      "Tarot Cards",
+      "Journals & Notebooks",
+      "Boxed Sets",
+      "Our Top Picks",
+      "Budget Picks: Under Rs.500",
+      "Nepali Literature",
+    ],
+    "By Publishers": [
+      "Penguin Random House",
+      "Harper Collins",
+      "Macmillan",
+      "Simon & Schuster",
+      "Hachette",
+      "Fingerprint",
+      "Rupa",
+      "Jaico",
+      "Wisdom Tree",
+      "Bloomsbury",
+    ],
+    "By Imprints": [
+      "Penguin Classics",
+      "Everyman's Library",
+      "Vintage Classics",
+      "Penguin Modern Classics",
+      "Hay House",
+      "Dorling Kindersley",
+      "Faber and Faber",
+      "Hodder and Stoughton",
+    ],
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     setIsLoggedIn(!!token);
   }, []);
 
-  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
@@ -21,12 +55,14 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-md z-50 relative" onMouseLeave={() => setShowDropdown(false)}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
         <Link to="/" className="text-2xl font-bold text-indigo-600">
           Digital Bookstore
         </Link>
 
+        {/* Desktop search */}
         <div className="hidden md:flex items-center border rounded-full px-4 py-2 w-72">
           <input
             type="text"
@@ -36,28 +72,28 @@ const Navbar = () => {
           <CiSearch className="text-xl text-gray-500" />
         </div>
 
-        <nav>
+        {/* Navigation */}
+        <nav className="relative">
           <ul className="flex items-center gap-6 text-sm font-medium">
-            <li>
-              <Link to="/" className="hover:text-indigo-600 transition">
-                Home
-              </Link>
+            {/* Shop Books with Mega Dropdown */}
+            <li onMouseEnter={() => setShowDropdown(true)}>
+              <button className="hover:text-indigo-600 transition">
+                Shop Books
+              </button>
             </li>
 
-            {/* Show Shop button only if logged in */}
+            {/* Show cart only if logged in */}
             {isLoggedIn && (
               <li>
-                <Link to="/shop" className="hover:text-indigo-600 transition">
-                  Shop
+                <Link
+                  to="/cart"
+                  className="flex items-center gap-1 px-3 py-2 hover:text-indigo-600 transition"
+                >
+                  <CiShoppingCart className="text-xl" />
+                  Cart
                 </Link>
               </li>
             )}
-
-            <li>
-              <Link to="/" className="hover:text-indigo-600 transition">
-                About
-              </Link>
-            </li>
 
             {!isLoggedIn ? (
               <>
@@ -92,6 +128,33 @@ const Navbar = () => {
         </nav>
       </div>
 
+      {/* Dropdown */}
+      {showDropdown && (
+        <div
+          className="absolute left-0 right-0 top-full bg-white shadow-lg p-6 grid grid-cols-4 gap-6 z-50"
+          onMouseEnter={() => setShowDropdown(true)}
+        >
+          {Object.entries(categories).map(([section, items], idx) => (
+            <div key={idx}>
+              <h4 className="font-bold mb-3 text-gray-800">{section}</h4>
+              <ul className="space-y-2 text-sm">
+                {items.map((item, i) => (
+                  <li key={i}>
+                    <Link
+                      to="/shop"
+                      className="text-gray-600 hover:text-indigo-600 transition"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Mobile search */}
       <div className="md:hidden px-6 pb-4">
         <div className="flex items-center border rounded-full px-4 py-2">
           <input
