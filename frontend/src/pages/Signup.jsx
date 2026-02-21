@@ -42,7 +42,6 @@ const Signup = ({ onSuccess, onClose }) => {
 
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-        <p className="text-gray-500 text-sm mt-2">Sign up to start your book journey 📚</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -84,7 +83,7 @@ const Signup = ({ onSuccess, onClose }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl text-white font-medium bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
+          className="w-full py-3 rounded-xl text-white font-medium bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
         >
           {loading ? "Creating account..." : "Sign Up"}
         </button>

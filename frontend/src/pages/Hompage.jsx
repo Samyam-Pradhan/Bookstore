@@ -12,12 +12,9 @@ import Signup from "./Signup";
 function Homepage() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-
-  // Called when login/signup is successful
   const handleAuthSuccess = () => {
     setShowLogin(false);
     setShowSignup(false);
-    // You can also trigger Navbar update via a state or context
   };
 
   return (
@@ -32,8 +29,6 @@ function Homepage() {
       <Category />
       <BestSelling />
       <Footer />
-
-      {/* Login Modal */}
       {showLogin && (
         <Login
           onSuccess={handleAuthSuccess}
@@ -41,7 +36,6 @@ function Homepage() {
         />
       )}
 
-      {/* Signup Modal */}
       {showSignup && (
         <Signup
           onSuccess={handleAuthSuccess}

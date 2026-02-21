@@ -33,7 +33,6 @@ const Login = ({ onSuccess, onClose }) => {
 
   return (
     <div className="relative">
-      {/* Close Button */}
       <button
         onClick={onClose}
         className="absolute top-0 right-0 text-gray-400 hover:text-gray-700 text-xl font-bold"
@@ -43,7 +42,6 @@ const Login = ({ onSuccess, onClose }) => {
 
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
-        <p className="text-gray-500 text-sm mt-2">Login to continue shopping 📚</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -74,7 +72,7 @@ const Login = ({ onSuccess, onClose }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl text-white font-medium bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
+          className="w-full py-3 rounded-xl text-white font-medium bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
         >
           {loading ? "Logging in..." : "Login"}
         </button>

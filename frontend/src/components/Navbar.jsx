@@ -59,12 +59,12 @@ const Navbar = () => {
         onMouseLeave={() => setShowDropdown(false)}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo */}
+  
           <Link to="/" className="text-2xl font-bold text-indigo-600">
             Digital Bookstore
           </Link>
 
-          {/* Desktop Search */}
+   
           <div className="hidden md:flex items-center border rounded-full px-4 py-2 w-72">
             <input
               type="text"
@@ -74,17 +74,15 @@ const Navbar = () => {
             <CiSearch className="text-xl text-gray-500" />
           </div>
 
-          {/* Navigation */}
+
           <nav className="relative">
             <ul className="flex items-center gap-6 text-sm font-medium">
-              {/* Shop Books */}
+
               <li onMouseEnter={() => setShowDropdown(true)}>
                 <button className="hover:text-indigo-600 transition">
                   Shop Books
                 </button>
               </li>
-
-              {/* Cart */}
               {isLoggedIn && (
                 <li>
                   <Link
@@ -97,7 +95,6 @@ const Navbar = () => {
                 </li>
               )}
 
-              {/* Auth Buttons */}
               {!isLoggedIn ? (
                 <>
                   <li>
@@ -131,7 +128,6 @@ const Navbar = () => {
           </nav>
         </div>
 
-        {/* Mega Dropdown */}
         {showDropdown && (
           <div
             className="absolute left-0 right-0 top-full bg-white shadow-lg p-6 grid grid-cols-4 gap-6 z-40"
@@ -156,8 +152,6 @@ const Navbar = () => {
             ))}
           </div>
         )}
-
-        {/* Mobile Search */}
         <div className="md:hidden px-6 pb-4">
           <div className="flex items-center border rounded-full px-4 py-2">
             <input
@@ -169,8 +163,6 @@ const Navbar = () => {
           </div>
         </div>
       </header>
-
-      {/* Login Modal */}
       {showLogin && (
         <AuthModal onClose={() => setShowLogin(false)}>
           <Login
@@ -183,7 +175,6 @@ const Navbar = () => {
         </AuthModal>
       )}
 
-      {/* Signup Modal */}
       {showSignup && (
         <AuthModal onClose={() => setShowSignup(false)}>
           <Signup
