@@ -42,7 +42,7 @@ const Shop = () => {
               className="group bg-white rounded-sm shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col overflow-hidden"
             >
               {/* Cover */}
-              <div className="relative aspect-[2/3] overflow-hidden bg-stone-200">
+              <div className="relative aspect-2/3 overflow-hidden bg-stone-200">
                 <img
                   src={book.book_image}
                   alt={book.title}
