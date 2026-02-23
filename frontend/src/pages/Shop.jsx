@@ -1,80 +1,91 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import React from "react";
 
-const Shop = () => {
-  const [books, setBooks] = useState([]);
-  const [error, setError] = useState(null);
-  const apiKey = import.meta.env.VITE_NYT_API_KEY;
+const BookDetails = () => {
+  const { title } = useParams();
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const API_KEY = import.meta.env.VITE_NYT_API_KEY;
 
   useEffect(() => {
-    axios
-      .get(`https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${apiKey}`)
-      .then((res) => setBooks(res.data.results.books))
-      .catch(() => setError("Failed to load books."));
-  }, [apiKey]);
+    const fetchBook = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=${API_KEY}`
+        );
 
-  if (error) return <p className="text-center text-red-500 py-20">{error}</p>;
+        const decodedTitle = decodeURIComponent(title);
+
+        const foundBook = res.data.results.books.find(
+          (b) => b.title.toLowerCase() === decodedTitle.toLowerCase()
+        );
+
+        setBook(foundBook);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBook();
+  }, [title, API_KEY]);
+
+  if (loading) return <p className="text-center py-6">Loading...</p>;
+  if (!book) return <p className="text-center py-6">Book not found</p>;
 
   return (
     <>
-      <Navbar />
+      <div className="max-w-7xl mx-auto px-8 py-20 bg-gradient-to-b from-gray-50 via-white to-gray-100 rounded-2xl shadow-xl">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
+          
+          {/* Book Image */}
+          <div className="relative group">
+            <img
+              src={book.book_image}
+              alt={book.title}
+              className="w-full object-cover rounded-2xl shadow-2xl transform group-hover:rotate-1 group-hover:scale-105 transition duration-500"
+            />
+          </div>
 
-      <main className="min-h-screen bg-stone-50">
-        {/* Header */}
-        <div className="text-center pt-20 pb-12 px-6">
-          <p className="text-xs tracking-widest uppercase text-amber-700 mb-3 font-medium">
-            NYT Bestsellers · Hardcover Fiction
-          </p>
-          <h1 className="text-5xl font-bold text-stone-900 font-serif">
-            The Reading List
-          </h1>
-          <div className="w-12 h-0.5 bg-amber-700 mx-auto mt-6" />
-        </div>
+          {/* Book Details */}
+          <div className="flex flex-col">
+            <h1 className="text-5xl font-serif font-bold mb-8 text-gray-900 tracking-wide">
+              {book.title}
+            </h1>
 
-        {/* Grid */}
-        <div className="max-w-7xl mx-auto px-6 pb-24 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          {books.map((book) => (
-            <div
-              key={book.primary_isbn13}
-              className="group bg-white rounded-sm shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col overflow-hidden"
-            >
-              {/* Cover */}
-              <div className="relative aspect-2/3 overflow-hidden bg-stone-200">
-                <img
-                  src={book.book_image}
-                  alt={book.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <span className="absolute top-2 left-2 bg-stone-900 text-stone-100 text-[10px] font-medium tracking-wider px-2 py-1 rounded-sm">
-                  #{book.rank}
-                </span>
-              </div>
-
-              {/* Info */}
-              <div className="p-4 flex flex-col flex-1">
-                <h3 className="font-serif font-bold text-stone-900 text-sm leading-snug line-clamp-2 mb-1">
-                  {book.title}
-                </h3>
-                <p className="text-xs text-stone-400 font-light mb-4">{book.author}</p>
-
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="text-sm font-semibold text-stone-800">$19.99</span>
-                  <button className="text-xs font-medium bg-stone-900 text-stone-50 px-3 py-1.5 rounded-sm hover:bg-amber-700 transition-colors duration-200">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-3 mb-6">
+              <span className="px-4 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
+                Author: {book.author}
+              </span>
+              <span className="px-4 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+                Publisher: {book.publisher}
+              </span>
+              <span className="px-4 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">
+                Rank #{book.rank}
+              </span>
             </div>
-          ))}
-        </div>
-      </main>
 
+            <p className="text-gray-700 leading-relaxed mb-10">
+              {book.description}
+            </p>
+
+            <div className="flex gap-4">
+              <button className="px-10 py-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg hover:scale-105 transition-transform duration-300">
+                Add to Cart
+              </button>
+              <button className="px-10 py-3 border border-gray-300 text-gray-700 rounded-full hover:bg-gray-100 transition">
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Footer />
     </>
   );
 };
 
-export default Shop;
+export default BookDetails;

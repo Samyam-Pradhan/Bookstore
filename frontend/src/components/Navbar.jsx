@@ -23,10 +23,8 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate("/");
   };
-
-  // Shop Books categories
   const categories = {
-    "Main Collections": ["Shop All", "Fiction", "Non-Fiction", "New Arrivals"],
+    "Main Collections": ["Hardcover Fiction", "Fiction", "Non-Fiction", "New Arrivals"],
     "Other Collections": [
       "Children's Books",
       "Tarot Cards",

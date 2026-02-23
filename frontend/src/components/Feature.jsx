@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Feature = () => {
@@ -8,32 +9,44 @@ const Feature = () => {
   const API_KEY = import.meta.env.VITE_NYT_API_KEY;
 
   useEffect(() => {
-    axios
-      .get(
-        `https://api.nytimes.com/svc/books/v3/lists/current/paperback-nonfiction.json?api-key=${API_KEY}`
-      )
-      .then((response) => {
-        setBooks(response.data.results.books.slice(0, 5));
-      })
-      .catch(() => {
-        setError("Failed to fetch new arrivals.");
-      });
-  }, []);
+    if (!API_KEY) {
+      setError("API key not found. Check your .env file.");
+      return;
+    }
 
-  if (error) return <div className="text-red-600 text-center py-6">{error}</div>;
+    const fetchBooks = async () => {
+      try {
+        const res = await axios.get(
+          `https://api.nytimes.com/svc/books/v3/lists/overview.json?published_date=2025-10-10&api-key=${API_KEY}`
+        );
+
+        const booksData = res.data.results.lists?.[0]?.books || [];
+        setBooks(booksData.slice(0, 5));
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch new arrivals.");
+      }
+    };
+
+    fetchBooks();
+  }, [API_KEY]);
+
+  if (error)
+    return <div className="text-red-600 text-center py-6">{error}</div>;
 
   return (
-   <section className="bg-[#F8F9FA] py-20">
+    <section className="bg-[#F8F9FA] py-20">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl font-extrabold text-center mb-14 text-gray-800">
-          ✨ New Arrivals
+           New Arrivals
         </h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {books.map((book, index) => (
-            <div
+            <Link
               key={index}
-              className="group bg-gray-50 rounded-2xl shadow hover:shadow-xl transition transform hover:-translate-y-2 overflow-hidden flex flex-col h-full"
+              to={`/book/${book.primary_isbn13}`}
+              state={{ book }}
+              className="group bg-white shadow hover:shadow-xl transition transform hover:-translate-y-2 overflow-hidden flex flex-col h-full cursor-pointer"
             >
               <div className="h-64 overflow-hidden">
                 <img
@@ -47,13 +60,8 @@ const Feature = () => {
                   {book.title}
                 </h3>
                 <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-                <div className="mt-auto">
-                  <button className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition">
-                    View Details
-                  </button>
-                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

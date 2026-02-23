@@ -17,7 +17,7 @@ const CategorySection = () => {
     <section className="bg-[#FFF5E1] py-20">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl font-extrabold text-center mb-14 text-gray-800">
-          📚 Explore Book Categories
+           Explore Book Categories
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10">
