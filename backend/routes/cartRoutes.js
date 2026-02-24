@@ -11,7 +11,6 @@ const router = express.Router();
 
 router.get("/", authMiddleware, getCart);
 router.post("/add", authMiddleware, addItemToCart);
-router.delete("/remove/:productId", authMiddleware, removeItemFromCart);
-router.put("/update/:productId", authMiddleware, updateItemQuantity);
-
+router.delete("/remove/:isbn", authMiddleware, removeItemFromCart);
+router.put("/update/:isbn", authMiddleware, updateItemQuantity);
 export default router;
