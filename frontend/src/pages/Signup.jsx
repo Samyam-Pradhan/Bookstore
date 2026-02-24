@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Signup = ({ onSuccess, onClose }) => {
+const Signup = ({ onSuccess, onClose, onLoginClick }) => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,72 +32,89 @@ const Signup = ({ onSuccess, onClose }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative bg-white p-8">
       <button
         onClick={onClose}
-        className="absolute top-0 right-0 text-gray-400 hover:text-gray-700 text-xl font-bold"
+        className="absolute top-4 right-4 text-gray-300 hover:text-gray-600 transition-colors text-xl"
+        aria-label="Close"
       >
         ✕
       </button>
-
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
+      <div className="mb-8">
+        <div className="w-8 h-0.5 bg-gray-300 mb-4" />
+        <h2 className="font-serif text-3xl text-gray-900">Create Account</h2>
+        <p className="text-gray-500 text-sm mt-2 font-light">
+          Join our community of readers
+        </p>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          disabled={loading}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
-          required
-        />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={handleChange}
-          disabled={loading}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
-          required
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          disabled={loading}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
-          required
-        />
-
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-gray-500 mb-2">
+            Full Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full border border-gray-200 px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-gray-500 mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full border border-gray-200 px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-gray-500 mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full border border-gray-200 px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
+            required
+          />
+        </div>
+        {error && (
+          <div className="bg-red-50 border border-red-200 px-4 py-3">
+            <p className="text-red-600 text-xs uppercase tracking-wider">{error}</p>
+          </div>
+        )}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl text-white font-medium bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
+          className="w-full py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-6"
         >
-          {loading ? "Creating account..." : "Sign Up"}
+          {loading ? "Creating account..." : "Create Account"}
         </button>
       </form>
-
-      <p className="mt-6 text-center text-sm text-gray-600">
-        Already have an account?{" "}
-        <button
-          onClick={onClose}
-          className="text-indigo-600 font-medium hover:underline"
-        >
-          Login
-        </button>
-      </p>
+      <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+        <p className="text-sm text-gray-500">
+          Already have an account?{" "}
+          <button
+            onClick={onLoginClick || onClose}
+            className="text-gray-900 font-medium hover:underline underline-offset-4 transition-colors"
+          >
+            Log in
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CiSearch, CiShoppingCart } from "react-icons/ci";
+import { CiSearch, CiShoppingCart, CiUser } from "react-icons/ci";
+import { FiChevronDown } from "react-icons/fi";
 import AuthModal from "./AuthModal";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -23,16 +24,26 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate("/");
   };
+
+  const toSlug = (name) =>
+    name
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/'/g, "")
+      .replace(/\s+/g, "-");
+
   const categories = {
-    "Main Collections": ["Hardcover Fiction", "Fiction", "Non-Fiction", "New Arrivals"],
+    "Main Collections": [
+      "Hardcover Fiction",
+      "Paperback Fiction",
+      "Hardcover Nonfiction",
+      "Paperback Nonfiction",
+      "Young Adult Hardcover",
+    ],
     "Other Collections": [
       "Children's Books",
-      "Tarot Cards",
-      "Journals & Notebooks",
-      "Boxed Sets",
-      "Our Top Picks",
-      "Budget Picks: Under Rs.500",
-      "Nepali Literature",
+      "Business Books",
+      "Advice How-To and Miscellaneous",
     ],
     "By Publishers": [
       "Penguin Random House",
@@ -52,114 +63,113 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className="bg-white shadow-md z-40 relative"
+      <header 
+        className="bg-white border-b border-gray-200 sticky top-0 z-40"
         onMouseLeave={() => setShowDropdown(false)}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-  
-          <Link to="/" className="text-2xl font-bold text-indigo-600">
-            Digital Bookstore
-          </Link>
-
-   
-          <div className="hidden md:flex items-center border rounded-full px-4 py-2 w-72">
-            <input
-              type="text"
-              placeholder="Search books..."
-              className="flex-1 outline-none text-sm"
-            />
-            <CiSearch className="text-xl text-gray-500" />
-          </div>
-
-
-          <nav className="relative">
-            <ul className="flex items-center gap-6 text-sm font-medium">
-
-              <li onMouseEnter={() => setShowDropdown(true)}>
-                <button className="hover:text-indigo-600 transition">
-                  Shop Books
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            <Link to="/" className="font-serif text-2xl text-gray-800 tracking-tight whitespace-nowrap">
+              Digital Bookstore
+            </Link>
+            <div className="hidden md:flex items-center border border-gray-300 rounded-md px-3 py-2 w-80 bg-white hover:border-gray-400 transition-colors">
+              <input
+                type="text"
+                placeholder="Search books..."
+                className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+              />
+              <CiSearch className="text-xl text-gray-500" />
+            </div>
+            <nav className="flex items-center gap-6">
+              <div 
+                className="relative"
+                onMouseEnter={() => setShowDropdown(true)}
+              >
+                <button className="flex items-center gap-1 text-sm uppercase tracking-wider text-gray-600 hover:text-gray-900 transition-colors font-medium">
+                  Shop
+                  <FiChevronDown className={`text-sm transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
                 </button>
-              </li>
+              </div>
+
               {isLoggedIn && (
-                <li>
-                  <Link
-                    to="/cart"
-                    className="flex items-center gap-1 px-3 py-2 hover:text-indigo-600 transition"
-                  >
-                    <CiShoppingCart className="text-xl" />
-                    Cart
-                  </Link>
-                </li>
+                <Link
+                  to="/cart"
+                  className="flex items-center gap-1 text-sm uppercase tracking-wider text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  <CiShoppingCart className="text-xl" />
+                  <span className="hidden lg:inline">Cart</span>
+                </Link>
               )}
 
               {!isLoggedIn ? (
                 <>
-                  <li>
-                    <button
-                      onClick={() => setShowLogin(true)}
-                      className="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50 transition"
-                    >
-                      Login
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => setShowSignup(true)}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
-                    >
-                      Sign Up
-                    </button>
-                  </li>
+                  <button
+                    onClick={() => setShowLogin(true)}
+                    className="text-sm uppercase tracking-wider text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => setShowSignup(true)}
+                    className="text-sm uppercase tracking-wider bg-gray-900 text-white px-5 py-2 hover:bg-gray-800 transition-colors font-medium"
+                  >
+                    Sign Up
+                  </button>
                 </>
               ) : (
-                <li>
+                <div className="flex items-center gap-4">
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
+                    className="text-xs uppercase tracking-wider text-gray-500 hover:text-gray-900 transition-colors font-medium"
                   >
                     Logout
                   </button>
-                </li>
+                </div>
               )}
-            </ul>
-          </nav>
+            </nav>
+          </div>
+          <div className="md:hidden pb-4">
+            <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 bg-white">
+              <input
+                type="text"
+                placeholder="Search books..."
+                className="flex-1 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+              />
+              <CiSearch className="text-xl text-gray-500" />
+            </div>
+          </div>
         </div>
-
         {showDropdown && (
-          <div
-            className="absolute left-0 right-0 top-full bg-white shadow-lg p-6 grid grid-cols-4 gap-6 z-40"
+          <div 
+            className="absolute left-0 right-0 top-full bg-white border-t border-gray-200 shadow-lg"
             onMouseEnter={() => setShowDropdown(true)}
           >
-            {Object.entries(categories).map(([section, items], idx) => (
-              <div key={idx}>
-                <h4 className="font-bold mb-3 text-gray-800">{section}</h4>
-                <ul className="space-y-2 text-sm">
-                  {items.map((item, i) => (
-                    <li key={i}>
-                      <Link
-                        to="/shop"
-                        className="text-gray-600 hover:text-indigo-600 transition"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+              {Object.entries(categories).map(([section, items], idx) => (
+                <div key={idx}>
+                  <div className="w-8 h-0.5 bg-gray-300 mb-4" />
+                  <h4 className="font-serif text-sm text-gray-800 mb-4 uppercase tracking-wider font-medium">
+                    {section}
+                  </h4>
+                  <ul className="space-y-3">
+                    {items.map((item, i) => (
+                      <li key={i}>
+                        <Link
+                          to={`/category/${toSlug(item)}`}
+                          className="text-xs text-gray-600 hover:text-gray-900 transition-colors uppercase tracking-wider"
+                          onClick={() => setShowDropdown(false)}
+                        >
+                          {item}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-gray-200" />
           </div>
         )}
-        <div className="md:hidden px-6 pb-4">
-          <div className="flex items-center border rounded-full px-4 py-2">
-            <input
-              type="text"
-              placeholder="Search books..."
-              className="flex-1 outline-none text-sm"
-            />
-            <CiSearch className="text-xl text-gray-500" />
-          </div>
-        </div>
       </header>
       {showLogin && (
         <AuthModal onClose={() => setShowLogin(false)}>
@@ -172,7 +182,6 @@ const Navbar = () => {
           />
         </AuthModal>
       )}
-
       {showSignup && (
         <AuthModal onClose={() => setShowSignup(false)}>
           <Signup

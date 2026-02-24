@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Login = ({ onSuccess, onClose }) => {
+const Login = ({ onSuccess, onClose, onSignupClick }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,61 +32,67 @@ const Login = ({ onSuccess, onClose }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative bg-white p-8">
+      {/* Close Button - Minimal */}
       <button
         onClick={onClose}
-        className="absolute top-0 right-0 text-gray-400 hover:text-gray-700 text-xl font-bold"
+        className="absolute top-4 right-4 text-gray-300 hover:text-gray-600 transition-colors text-xl"
+        aria-label="Close"
       >
         ✕
       </button>
 
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
+      {/* Header - Editorial */}
+      <div className="mb-8">
+        <div className="w-8 h-0.5 bg-gray-300 mb-4" />
+        <h2 className="font-serif text-3xl text-gray-900">Welcome Back</h2>
+        <p className="text-gray-500 text-sm mt-2 font-light">
+          Log in to your account
+        </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={formData.email}
-          onChange={handleChange}
-          disabled={loading}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
-          required
-        />
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-gray-500 mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full border border-gray-200 px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          disabled={loading}
-          className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
-          required
-        />
-
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
+        <div>
+          <label className="block text-xs uppercase tracking-wider text-gray-500 mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            disabled={loading}
+            className="w-full border border-gray-200 px-4 py-3 text-gray-700 text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
+            required
+          />
+        </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl text-white font-medium bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg"
+          className="w-full py-3 bg-black text-white text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Logging in..." : "Log In"}
         </button>
       </form>
-
-      <p className="mt-6 text-center text-sm text-gray-600">
-        Don’t have an account?{" "}
-        <button
-          onClick={onClose} // parent can open signup if needed
-          className="text-indigo-600 font-medium hover:underline"
-        >
-          Sign up
-        </button>
-      </p>
+      
     </div>
   );
 };

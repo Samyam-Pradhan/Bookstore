@@ -8,6 +8,7 @@ import AuthModal from "./components/AuthModal";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BookDetails from "./pages/BookDetails";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -21,7 +22,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/shop" element={<Shop />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/book/:title" element={<BookDetails />} />
       </Routes>

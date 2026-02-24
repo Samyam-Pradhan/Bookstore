@@ -11,8 +11,8 @@ const BookDetails = () => {
   const [book, setBook] = useState(location.state?.book || null);
   const [loading, setLoading] = useState(!location.state?.book);
   const [error, setError] = useState(null);
-  const [added, setAdded] = useState(false); // track if book is added
-  const [quantity, setQuantity] = useState(1); // new quantity state
+  const [added, setAdded] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const API_KEY = import.meta.env.VITE_NYT_API_KEY;
 
@@ -75,65 +75,165 @@ const BookDetails = () => {
     }
   };
 
-  if (loading) return <p className="text-center py-6">Loading...</p>;
-  if (error) return <p className="text-center py-6 text-red-600">{error}</p>;
-  if (!book) return <p className="text-center py-6">Book not found</p>;
+  // Loading State
+  if (loading) {
+    return (
+      <div className="bg-[#FFFAF1] min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block w-12 h-12 border border-gray-300 border-t-gray-900 rounded-full animate-spin mb-4" />
+          <p className="text-gray-400 text-sm uppercase tracking-widest">Loading book...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="bg-[#FFFAF1] min-h-screen flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4 opacity-30">📖</div>
+          <h2 className="font-serif text-2xl text-gray-900 mb-3">Book Not Found</h2>
+          <p className="text-gray-500 text-sm mb-8">{error}</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!book) {
+    return (
+      <div className="bg-[#FFFAF1] min-h-screen flex items-center justify-center px-6">
+        <div className="text-center">
+          <p className="text-gray-400 text-sm uppercase tracking-widest">Book not found</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="flex justify-center items-center min-h-screen px-6 bg-gray-100">
-        <div className="max-w-5xl w-full p-12 grid md:grid-cols-2 gap-12 items-center bg-gray-100">
-          <div className="flex justify-center">
-            <img src={book.book_image} alt={book.title} className="w-72 h-auto object-cover" />
-          </div>
+      <div className="bg-[#FFFAF1] min-h-screen">
+        <div className="max-w-5xl mx-auto px-6 py-16">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-xs uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors mb-10 group"
+          >
+            <span className="group-hover:-translate-x-1 transition-transform">←</span>
+            <span>Back</span>
+          </button>
 
-          <div className="flex flex-col text-left">
-            <h1 className="text-3xl font-serif font-bold mb-6 text-gray-900">{book.title}</h1>
-
-            <div className="space-y-2 text-gray-700 mb-6">
-              <p><span className="font-semibold">Author:</span> {book.author}</p>
-              <p><span className="font-semibold">Publisher:</span> {book.publisher}</p>
-              <p><span className="font-semibold">Rank:</span> #{book.rank}</p>
+          {/* Book Details - Editorial Layout */}
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            {/* Book Cover - Left - Smaller */}
+            <div className="relative flex justify-center md:justify-start">
+              <div className="w-64 md:w-72">
+                <div className="bg-white shadow-md overflow-hidden">
+                  <img
+                    src={book.book_image}
+                    alt={book.title}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                
+                {/* Publisher Note */}
+                {book.publisher && (
+                  <p className="text-xs text-gray-400 mt-3 text-center">
+                    {book.publisher}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <p className="text-gray-600 leading-relaxed mb-8 max-w-md">{book.description}</p>
-
-            {/* Quantity + Add to Cart */}
-            <div className="flex items-center gap-4">
-              {/* Quantity selector */}
-              <div className="flex items-center border rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 transition"
-                >
-                  -
-                </button>
-                <span className="px-4 py-1">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="px-3 py-1 bg-gray-200 hover:bg-gray-300 transition"
-                >
-                  +
-                </button>
+            {/* Book Info - Right - Tighter */}
+            <div className="space-y-6">
+              {/* Header */}
+              <div>
+                <div className="w-10 h-0.5 bg-gray-300 mb-3" />
+                <h1 className="font-serif text-3xl md:text-4xl text-gray-900 mb-2 leading-tight">
+                  {book.title}
+                </h1>
+                <p className="text-gray-500 text-xs uppercase tracking-wider">
+                  by <span className="text-gray-700">{book.author}</span>
+                </p>
               </div>
 
-              {/* Add to cart button */}
-              <button
-                onClick={handleAddToCart}
-                disabled={added}
-                className={`px-8 py-3 font-medium transition ${
-                  added
-                    ? "bg-green-500 text-white cursor-default"
-                    : "bg-gray-900 text-white hover:bg-gray-800"
-                }`}
-              >
-                {added ? "Added to Cart" : "Add to Cart"}
-              </button>
+              {/* Description - Compact */}
+              <div className="prose prose-sm max-w-none">
+                <p className="text-gray-600 text-sm leading-relaxed font-light">
+                  {book.description || "No description available for this book."}
+                </p>
+              </div>
+
+              {/* Metadata Grid - Compact */}
+              <div className="grid grid-cols-2 gap-3 py-4 border-y border-gray-200">
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Publisher</p>
+                  <p className="text-xs text-gray-700">{book.publisher || "Unknown"}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">ISBN</p>
+                  <p className="text-xs text-gray-700 font-mono">{book.primary_isbn13}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Weeks on List</p>
+                  <p className="text-xs text-gray-700">{book.weeks_on_list || 1} weeks</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Price</p>
+                  <p className="text-xs text-gray-700 font-serif">$12.99</p>
+                </div>
+              </div>
+
+              {/* Buy Section - Compact */}
+              <div className="space-y-3">
+                {/* Quantity Selector - Smaller */}
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-gray-500 mb-2">
+                    Quantity
+                  </label>
+                  <div className="flex items-center border border-gray-200 w-28">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <span className="flex-1 text-center text-xs text-gray-700">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                {/* Add to Cart Button - Compact */}
+                <button
+                  onClick={handleAddToCart}
+                  disabled={added}
+                  className={`w-full py-3 text-xs uppercase tracking-widest transition-colors ${
+                    added
+                      ? "bg-gray-200 text-gray-500 cursor-default"
+                      : "bg-black text-white hover:bg-gray-800"
+                  }`}
+                >
+                  {added ? "Added to Cart" : "Add to Cart"}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </>
   );

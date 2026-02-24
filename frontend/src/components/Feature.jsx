@@ -5,6 +5,7 @@ import axios from "axios";
 const Feature = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(null);
+  const [hoveredBook, setHoveredBook] = useState(null);
 
   const API_KEY = import.meta.env.VITE_NYT_API_KEY;
 
@@ -31,35 +32,55 @@ const Feature = () => {
     fetchBooks();
   }, [API_KEY]);
 
-  if (error)
-    return <div className="text-red-600 text-center py-6">{error}</div>;
+  if (error) {
+    return (
+      <div className="bg-[#FFFAF1] py-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-gray-400 text-sm uppercase tracking-widest">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <section className="bg-[#F8F9FA] py-20">
+    <section className="bg-[#FDFCF7] py-24 border-y border-black/5">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-extrabold text-center mb-14 text-gray-800">
-           New Arrivals
-        </h2>
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-0.5 bg-black/20" />
+          </div>
+          <h2 className="font-serif text-4xl md:text-5xl text-gray-900">
+            New Arrivals
+          </h2>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {books.map((book, index) => (
             <Link
-              key={index}
+              key={book.primary_isbn13 || index}
               to={`/book/${book.primary_isbn13}`}
               state={{ book }}
-              className="group bg-white shadow hover:shadow-xl transition transform hover:-translate-y-2 overflow-hidden flex flex-col h-full cursor-pointer"
+              className="group block"
+              onMouseEnter={() => setHoveredBook(book.primary_isbn13)}
+              onMouseLeave={() => setHoveredBook(null)}
             >
-              <div className="h-64 overflow-hidden">
-                <img
-                  src={book.book_image}
-                  alt={book.title}
-                  className="h-full w-full object-cover group-hover:scale-105 transition duration-500"
-                />
-              </div>
-              <div className="p-5 text-center flex flex-col grow">
-                <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2">
-                  {book.title}
-                </h3>
-                <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
+              <div className="space-y-4">
+                <div className="relative aspect-2/3 overflow-hidden bg-white">
+                  <img
+                    src={book.book_image}
+                    alt={book.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                </div>
+                <div className="space-y-2 text-center">
+                  <h3 className="font-serif text-base font-medium text-gray-900 line-clamp-2 group-hover:text-gray-600 transition-colors">
+                    {book.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">
+                    {book.author}
+                  </p>
+                </div>
               </div>
             </Link>
           ))}
