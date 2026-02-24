@@ -105,7 +105,7 @@ const Cart = () => {
                 >
                   <div className="w-1 bg-yellow-400 rounded-full" />
 
-                  <div className="flex-grow min-w-0">
+                  <div className="grow min-w-0">
                     <h3 className="text-lg font-semibold truncate">{item.title}</h3>
                     <p className="text-gray-500 text-sm mt-0.5">{item.author}</p>
 
@@ -119,7 +119,7 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-end justify-between gap-3 flex-shrink-0">
+                  <div className="flex flex-col items-end justify-between gap-3 shrink-0">
                     <p className="text-base font-semibold">
                       Rs. {(item.price * item.quantity).toLocaleString()}
                     </p>
